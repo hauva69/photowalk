@@ -10,9 +10,12 @@ import os.path
 DN = '/home/hauva/Pictures/2012/New_York/08'
 HDN = '/home/hauva/Pictures/heidille'
 
+def dofiles(dname, fnames):
+    print dname
+
 def visit(arg, dname, fnames):
     if dname.endswith('/cand'):
-        print dname
+        dofiles(dname, fnames)
 
 def main():
     try:
