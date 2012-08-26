@@ -11,7 +11,19 @@ DN = '/home/hauva/Pictures/2012/New_York/08'
 HDN = '/home/hauva/Pictures/heidille'
 
 def dofiles(dname, fnames):
-    print dname
+    todname = dname.replace(DN, HDN)
+    try:
+        os.makedirs(todname)
+    except OSError, ex:
+        if errno.EEXIST == ex.errno:
+            pass
+        else:
+            raise ex
+    for i in fnames:
+        fn = '%s/%s' % (dname, i)
+        tofn = '%s/%s' % (todname, i.lower())
+        print fn, ' => ', tofn
+        im = Image.open(fn)
 
 def visit(arg, dname, fnames):
     if dname.endswith('/cand'):
