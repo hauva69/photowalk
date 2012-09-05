@@ -1,0 +1,40 @@
+#!/usr/bin/python
+
+import errno
+import os
+import shutil
+import sys
+
+def init():
+    nefdn = 'orig_nef'
+    jpgdn = 'orig_jpg'
+    try:
+        os.mkdir(nefdn)
+    except OSError, ex:
+        if ex.errno == errno.EEXIST:
+            pass
+        else:
+            raise ex
+    try:
+        os.mkdir(jpgdn)
+    except OSError, ex:
+        if ex.errno == errno.EEXIST:
+            pass
+        else:
+            raise ex
+    for i in os.listdir('.'):
+        fn = i.lower()
+        if fn.endswith('.nef'):
+            fn = '%s/%s' % (nefdn, fn)
+        elif fn.endswith('.jpg'):
+            fn = '%s/%s' % (jpgdn, fn)
+        shutil.move(i, fn)
+
+def main():
+    cmd = sys.argv[1]
+    if cmd == 'init':
+        init()
+
+if __name__ == '__main__':
+    main()
+
