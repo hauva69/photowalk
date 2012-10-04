@@ -30,10 +30,26 @@ def init():
             fn = '%s/%s' % (jpgdn, fn)
         shutil.move(i, fn)
 
+def rawcand(canddn, rawdn, todn):
+    try:
+        os.mkdir(todn)
+    except OSError, ex:
+        if errno.EEXIST == ex.errno:
+            pass
+        else:
+            raise ex
+    for i in os.listdir(canddn):
+        rawfn = '%s/%s' % (rawdn, i.replace('.jpg', '.nef'))
+        tmp = '%s/%s' % (todn, i.replace('.jpg', '.nef'))
+        if not os.path.exists(tmp):
+            os.link(rawfn, tmp)
+
 def main():
     cmd = sys.argv[1]
     if cmd == 'init':
         init()
+    elif cmd == 'rawcand':
+        rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
 
 if __name__ == '__main__':
     main()
