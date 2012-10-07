@@ -31,6 +31,8 @@ def init():
         shutil.move(i, fn)
 
 def rawcand(canddn, rawdn, todn):
+    '''Takes all files from canddn and hard links the corresponding RAW
+files from rawdn to todn.'''
     try:
         os.mkdir(todn)
     except OSError, ex:
