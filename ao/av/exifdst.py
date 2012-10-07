@@ -8,6 +8,7 @@ import os.path
 import sys
 
 def getfilenameanddate(dn, fn):
+    '''directory name, file name -> Exif.Image.Datetime.value'''
     fn = os.path.join(dn, fn)
     md = pyexiv2.ImageMetadata(fn)
     md.read()
