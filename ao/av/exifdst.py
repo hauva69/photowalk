@@ -14,9 +14,9 @@ def getfilenameanddate(dn, fn):
     md.read()
     return fn, md['Exif.Image.DateTime'].value
 
-def main():
-    origdn = sys.argv[1]
-    treedn = sys.argv[2]
+def exifdst(origdn, treedn):
+    '''origdn (the picture directory), treedn (the directory where the 
+    files will be created.'''
     for i in os.listdir(origdn):
         infn, dt = getfilenameanddate(origdn, i)
         sy = '%d' % dt.year
@@ -34,5 +34,7 @@ def main():
         os.link(infn, outfn)
 
 if __name__ == '__main__':
-    main()
+    origdn = sys.argv[1]
+    treedn = sys.argv[2]
+    exifdst(origdn, treedn)
 
