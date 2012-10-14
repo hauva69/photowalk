@@ -30,6 +30,20 @@ def init():
             fn = '%s/%s' % (jpgdn, fn)
         shutil.move(i, fn)
 
+def cand(jpgdn, canddn):
+    '''Hard links all *.jpg files from jpgdn to canddn.'''
+    try:
+        os.mkdir(canddn)
+    except OSError, ex:
+        if ex.errno == errno.EEXIST:
+            pass
+        else:
+            raise ex
+    for i in os.listdir(jpgdn):
+        fn = '%s/%s' % (jpgdn, i)
+        tofn = '%s/%s' % (canddn, i)
+        os.link(fn, tofn)
+
 def rawcand(canddn, rawdn, todn):
     '''Takes all files from canddn and hard links the corresponding RAW
 files from rawdn to todn.'''
@@ -50,6 +64,8 @@ def main():
     cmd = sys.argv[1]
     if cmd == 'init':
         init()
+    elif cmd == 'cand':
+        cand(sys.argv[2], sys.argv[3])
     elif cmd == 'rawcand':
         rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
 
