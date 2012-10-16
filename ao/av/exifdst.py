@@ -18,7 +18,14 @@ def exifdst(origdn, treedn):
     '''origdn (the picture directory), treedn (the directory where the 
     files will be created.'''
     for i in os.listdir(origdn):
-        infn, dt = getfilenameanddate(origdn, i)
+        if not os.path.isfile(i):
+            continue
+        try:
+            infn, dt = getfilenameanddate(origdn, i)
+        except IOError, ex:
+            msg = '%s\n' % str(ex)
+            sys.stderr.write(msg)
+            continue
         sy = '%d' % dt.year
         sm = '%02d' % dt.month
         sd = '%02d' % dt.day
@@ -31,7 +38,13 @@ def exifdst(origdn, treedn):
             else:
                 raise ex
         outfn = os.path.join(dn, i.lower())
-        os.link(infn, outfn)
+        try:
+            os.link(infn, outfn)
+        except OSError, ex:
+            if errno.EEXIST == ex.errno:
+                continue
+            else:
+                raise ex
 
 if __name__ == '__main__':
     origdn = sys.argv[1]
