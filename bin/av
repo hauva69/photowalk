@@ -5,6 +5,9 @@ import os
 import shutil
 import sys
 
+def help():
+    print('FIXME: I need help!')
+
 def init():
     nefdn = 'orig_nef'
     jpgdn = 'orig_jpg'
@@ -61,7 +64,11 @@ files from rawdn to todn.'''
             os.link(rawfn, tmp)
 
 def main():
-    cmd = sys.argv[1]
+    try:
+        cmd = sys.argv[1]
+    except IndexError:
+        help()
+        sys.exit(1)
     if cmd == 'init':
         init()
     elif cmd == 'cand':
