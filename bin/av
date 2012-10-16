@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import ao.av.exifdst
+
 import errno
 import os
 import shutil
@@ -32,6 +34,10 @@ def init():
         elif fn.endswith('.jpg'):
             fn = '%s/%s' % (jpgdn, fn)
         shutil.move(i, fn)
+
+def dist(origdn, treedn):
+    '''Copies files from origdn to treedn/YYYY/MM/DD.'''
+    ao.av.exifdst.exifdst(origdn, treedn)
 
 def cand(jpgdn, canddn):
     '''Hard links all *.jpg files from jpgdn to canddn.'''
@@ -75,6 +81,8 @@ def main():
         cand(sys.argv[2], sys.argv[3])
     elif cmd == 'rawcand':
         rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
+    elif cmd == 'dist':
+        dist(sys.argv[2], sys.argv[3])
 
 if __name__ == '__main__':
     main()
