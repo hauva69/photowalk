@@ -5,23 +5,24 @@ import pyexiv2
 import errno
 import os
 import os.path
+import shutil
 import sys
 
-def getfilenameanddate(dn, fn):
+def getfilenameanddate(fn):
     '''directory name, file name -> Exif.Image.Datetime.value'''
-    fn = os.path.join(dn, fn)
     md = pyexiv2.ImageMetadata(fn)
     md.read()
-    return fn, md['Exif.Image.DateTime'].value
+    return md['Exif.Image.DateTime'].value
 
 def exifdst(origdn, treedn):
     '''origdn (the picture directory), treedn (the directory where the 
     files will be created.'''
     for i in os.listdir(origdn):
-        if not os.path.isfile(i):
+        infn = os.path.join(origdn, i)
+        if not os.path.isfile(infn):
             continue
         try:
-            infn, dt = getfilenameanddate(origdn, i)
+            dt = getfilenameanddate(infn)
         except IOError, ex:
             msg = '%s\n' % str(ex)
             sys.stderr.write(msg)
@@ -43,7 +44,10 @@ def exifdst(origdn, treedn):
         except OSError, ex:
             if errno.EEXIST == ex.errno:
                 continue
+            elif errno.EXDEV == ex.errno:
+                shutil.copy(infn, outfn)
             else:
+                sys.stderr.write('%s\n' % infn)
                 raise ex
 
 if __name__ == '__main__':
