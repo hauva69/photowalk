@@ -37,7 +37,12 @@ def init():
 
 def dist(origdn, treedn):
     '''Copies files from origdn to treedn/YYYY/MM/DD.'''
-    ao.av.exifdst.exifdst(origdn, treedn)
+    try:
+        ao.av.exifdst.exifdst(origdn, treedn)
+    except OSError, ex:
+        msg = '%s\n' % str(ex)
+        sys.stderr.write(msg)
+        sys.exit(2)
 
 def cand(jpgdn, canddn):
     '''Hard links all *.jpg files from jpgdn to canddn.'''
