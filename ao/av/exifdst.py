@@ -8,7 +8,7 @@ import os.path
 import shutil
 import sys
 
-def getfilenameanddate(fn):
+def getdate(fn):
     '''directory name, file name -> Exif.Image.Datetime.value'''
     md = pyexiv2.ImageMetadata(fn)
     md.read()
@@ -22,7 +22,7 @@ def exifdst(origdn, treedn):
         if not os.path.isfile(infn):
             continue
         try:
-            dt = getfilenameanddate(infn)
+            dt = getdate(infn)
         except IOError, ex:
             msg = '%s\n' % str(ex)
             sys.stderr.write(msg)
