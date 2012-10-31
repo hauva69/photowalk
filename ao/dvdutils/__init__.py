@@ -13,6 +13,10 @@ CONF = '%s/.aburnrc' % (os.environ['HOME'])
 def perror(msg):
     sys.stderr.write(msg)
 
+def help():
+    msg = 'FIXME: implement help.\n'
+    perror(msg)
+
 def main():
     config = ConfigParser.SafeConfigParser()
     if not os.path.exists(CONF):
@@ -20,6 +24,21 @@ def main():
         perror(msg)
         sys.exit(1)
     config.read(CONF)
+    try:
+        cmd = sys.argv[1]
+    except IndexError:
+        help()
+        sys.exit(2)
+    if cmd == 'format':
+        format(config)
+    else:
+        help()
+
+def format(config):
+    device = config.get('default', 'device')
+    formatcmd = '%s %s %s' % (config.get('default', 'dvdformat'), '-force', \
+        device)
+    os.system(formatcmd)
 
 if __name__ == '__main__':
     main()
