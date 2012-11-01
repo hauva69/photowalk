@@ -31,8 +31,21 @@ def main():
         sys.exit(2)
     if cmd == 'format':
         format(config)
+    elif cmd == 'burn':
+        try:
+            dn = sys.argv[2]
+            burn(config, dn)
+        except IndexError:
+            help()
+            sys.exit(3)
     else:
         help()
+
+def burn(config, dn):
+    device = config.get('default', 'device')
+    growisofs = config.get('default', 'growisofs')
+    cmd = '%s -dvd-compat -Z %s -J -R -pad %s' % (growisofs, device, dn) 
+    os.system(cmd)
 
 def format(config):
     device = config.get('default', 'device')
