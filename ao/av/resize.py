@@ -28,7 +28,6 @@ def scale(image, size):
 if __name__ == '__main__':
     frmd = sys.argv[1]
     tod = sys.argv[2]
-<<<<<<< HEAD
     try:
         os.mkdir(tod)
     except OSError, ex:
@@ -39,17 +38,11 @@ if __name__ == '__main__':
     files = os.listdir(frmd)
     for i in files:
         fn = '%s/%s' % (frmd, i)
-        im = Image.open(fn)
-=======
-    files = os.listdir(frmd)
-    for i in files:
-        fn = '%s/%s' % (frmd, i)
         try:
             im = Image.open(fn)
         except IOError, ex:
             # FIXME
 	    continue
->>>>>>> 59afa58a921254926cddefeb1c471254e411914b
         out = scale(im, 800)
         outfn = '%s/%s' % (tod, i)
         out.save(outfn)
