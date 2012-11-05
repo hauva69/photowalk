@@ -2,6 +2,8 @@
 
 from __future__ import division
 
+import ao.av
+
 import Image
 import pyexiv2
 
@@ -11,7 +13,7 @@ import os
 import os.path
 import sys
 
-def scale(image, size):
+def scale(image, size=ao.av.PICASA_MAX_SIZE):
     '''Returns a scaled image where the length of the longest edge is size.'''
     w, h = image.size
     if w == h:
@@ -43,7 +45,7 @@ if __name__ == '__main__':
         except IOError, ex:
             # FIXME
 	    continue
-        out = scale(im, 800)
+        out = scale(im)
         outfn = '%s/%s' % (tod, i)
         out.save(outfn)
 
