@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import ao.av.exifdst
+import ao.av.resize
 
 import errno
 import os
@@ -74,6 +75,10 @@ files from rawdn to todn.'''
         if not os.path.exists(tmp):
             os.link(rawfn, tmp)
 
+def resize(frmdn, todn, size=2048):
+    for i in frmdn:
+        print i
+
 def main():
     try:
         cmd = sys.argv[1]
@@ -88,6 +93,8 @@ def main():
         rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == 'dist':
         dist(sys.argv[2], sys.argv[3])
+    elif cmd == 'resize':
+        resize(frmdn, todn)
 
 if __name__ == '__main__':
     main()
