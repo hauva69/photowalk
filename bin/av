@@ -3,6 +3,8 @@
 import ao.av.exifdst
 import ao.av.resize
 
+import Image
+
 import errno
 import os
 import shutil
@@ -76,8 +78,14 @@ files from rawdn to todn.'''
             os.link(rawfn, tmp)
 
 def resize(frmdn, todn, size=2048):
-    for i in frmdn:
-        print i
+    if not os.path.exists(todn):
+        os.mkdir(todn)
+    for i in os.listdir(frmdn):
+        frm = '%s/%s' % (frmdn, i)
+        to = '%s/%s' % (todn, i)
+        im = Image.open(frm)
+        ao.av.resize.scale(im, size)
+        im.save(to)
 
 def main():
     try:
@@ -94,6 +102,8 @@ def main():
     elif cmd == 'dist':
         dist(sys.argv[2], sys.argv[3])
     elif cmd == 'resize':
+        frmdn = sys.argv[2]
+        todn = sys.argv[3]
         resize(frmdn, todn)
 
 if __name__ == '__main__':
