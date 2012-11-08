@@ -2,6 +2,7 @@
 
 import ao.av.exifdst
 import ao.av.resize
+import ao.av.rotate
 
 import Image
 
@@ -84,6 +85,7 @@ def resize(frmdn, todn, size=2048):
         frm = '%s/%s' % (frmdn, i)
         to = '%s/%s' % (todn, i)
         im = Image.open(frm)
+        im = ao.av.rotate.rotate(im, frm)
         ao.av.resize.scale(im, size)
         im.save(to)
 
