@@ -12,6 +12,7 @@ import shutil
 import sys
 
 def help():
+    '''Help for each command.'''
     print('FIXME: I need help!')
 
 def init():
