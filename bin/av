@@ -107,6 +107,8 @@ def main():
         frmdn = sys.argv[2]
         todn = sys.argv[3]
         resize(frmdn, todn)
+    elif cmd == 'help':
+        help()
 
 if __name__ == '__main__':
     main()
