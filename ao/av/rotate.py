@@ -11,15 +11,14 @@ def rotate(image, filename):
     '''Image, filename -> image rotated according to ORIENTATION_KEY.'''
     md = pyexiv2.ImageMetadata(filename)
     md.read()
-    print filename, md[ORIENTATION_KEY].value
     o = md[ORIENTATION_KEY].value
     rotation = 0
     if o == 8: # left-bottom according to exif command.
         rotation = 90
     elif o == 6: # right-top accordin to exif command.
         rotation = 270
-    elif o == 1:
-        rotation = 180
+    #elif o == 1:
+    #    rotation = 180
     return image.rotate(rotation)
 
 if __name__ == '__main__':
