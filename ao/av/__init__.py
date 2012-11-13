@@ -3,15 +3,21 @@
 PICASA_MAX_SIZE = 2048
 
 import Image
+import pyexiv2
+
 import sys
 
 class PhotowalkImage(object):
+    '''An image representation class.'''
     image = None
     filename = None
+    metadata = None
 
     def __init__(self, filename):
-        image = Image.open(filename)
+        '''filename -> PhotowalkImage'''
+        self.image = Image.open(filename)
         self.filename = filename
+        self.metadata = pyexiv2.ImageMetadata(filename)
 
     def __str__(self):
         s = '''Filename: %s
