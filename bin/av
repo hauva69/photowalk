@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+'''
+FIXME: Write the program documentation.
+'''
+
 import ao.av.exifdst
 import ao.av.resize
 import ao.av.rotate
@@ -13,7 +17,21 @@ import sys
 
 def help():
     '''Help for each command.'''
-    print('FIXME: I need help!')
+    # FIXME: I need more help!
+    prog = sys.argv[0]
+    try:
+        cmd = sys.argv[2]
+    except IndexError:
+        print(__doc__)
+        sys.exit(0)
+    if cmd == 'resize':
+        help_resize(prog)
+        sys.exit(0)
+
+def help_resize(prog):
+    '''Help for command resize.'''
+    msg = '%s resize from_directory to_directory' % prog
+    print(msg)
 
 def init():
     nefdn = 'orig_nef'
