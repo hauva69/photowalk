@@ -13,10 +13,16 @@ class PhotowalkImage(object):
         image = Image.open(filename)
         self.filename = filename
 
+    def __str__(self):
+        s = '''Filename: %s
+''' % (self.filename)
+        return s
+
 def main():
     filenames = sys.argv[1:]
     for i in filenames:
-        print i
+        pwim = PhotowalkImage(i)
+        print(pwim)
 
 if __name__ == '__main__':
     main()
