@@ -12,6 +12,9 @@ a full-featured workflow program like Darktable or Aftershot Pro.
 
 DEPENDENCIES
 
+
+- Python 2.7
+- pyexiv2
 - Python Imaging Library, PIL
 
 TODO
