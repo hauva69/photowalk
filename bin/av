@@ -12,6 +12,7 @@ import Image
 import pyexiv2
 
 import errno
+import getopt
 import os
 import shutil
 import sys
@@ -121,10 +122,18 @@ def main():
     except IndexError:
         help()
         sys.exit(1)
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], '-n')
+    except getopt.GetoptError:
+        help()
+        sys.exit(3)
+    print opts
+    print args
+    sys.exit(42)
     if cmd == 'init':
         init()
     elif cmd == 'cand':
-        cand(sys.argv[2], sys.argv[3])
+        cand(args[2], args[3])
     elif cmd == 'rawcand':
         rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == 'dist':
@@ -133,6 +142,8 @@ def main():
         frmdn = sys.argv[2]
         todn = sys.argv[3]
         resize(frmdn, todn)
+    elif cmd == 'import':
+        frmdn = sys.argv
     elif cmd == 'help':
         help()
 
