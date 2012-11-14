@@ -1,2 +1,26 @@
-Command line image manipulation tool.
+PHOTOWALK
+=========
+
+Command line photography workflow progam which is intended to be a tool 
+for a traveling light photographer and preprocessing tool before using 
+a full-featured workflow program like Darktable or Aftershot Pro.
+
+- Copies images to YYYY/MM/DDDD directory tree.
+- Rotates JPG's according to EXIF data.
+- Resizes JPG's, to free Picasaweb maximum size 2048 px.
+
+DEPENDENCIES
+
+- Python Imaging Library, PIL
+
+TODO
+
+- Documentation which is usable for other people.
+- Renaming templates.
+- Geotagging
+- Cleaning, including an own PhotowalkImage class
+- RAW-support
+- Logging
+- Picasa export
+- DVD backups
 
