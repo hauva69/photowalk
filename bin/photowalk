@@ -34,7 +34,8 @@ def help(prog, args):
         help_init(prog)
         sys.exit(0)
     else:
-        msg = '%s: %s unknown command.' % (prog, cmd)
+        msg = '%s: %s is an unknown command.\n' % (prog, cmd)
+        sys.stderr.write(msg)
         sys.exit(4)
 
 def help_init(prog):
