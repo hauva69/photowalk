@@ -15,6 +15,7 @@ import ConfigParser
 import errno
 import getopt
 import os
+import os.path
 import shutil
 import sys
 
@@ -132,11 +133,15 @@ def main():
 
     prog = sys.argv[0]
     try:
-        conf = os.environ['PHOTOWALK_HOME']
+        conffn = '%s/etc/photowalkrc' % os.environ['PHOTOWALK_HOME']
     except KeyError:
         msg = '%s: environment variable PHOTOWALK_HOME not defined.\n' % prog
         sys.stderr.write(msg)
         sys.exit(5)
+    if not os.path.exists(conffn):
+        msg = '%s: configuration file %s does not exist.\n' % (prog, conffn)
+        sys.stderr.write(msg)
+        sys.exit(6)
     config = ConfigParser.SafeConfigParser()
     config.read(conffn)
 
