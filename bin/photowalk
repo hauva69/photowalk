@@ -126,11 +126,11 @@ def resize(frmdn, todn, size=2048):
         mdfrm.read()
         mdto = pyexiv2.ImageMetadata(to)
         mdto.read()
-        mdto['Exif.Image.Orientation'] = 1
-        w, h = im.size
-        mdto['Exif.Photo.PixelXDimension'] = w
-        mdto['Exif.Photo.PixelYDimension'] = h
         pyexiv2.ImageMetadata.copy(mdfrm, mdto)
+        mdto['Exif.Image.Orientation']= 1
+        w, h = im.size
+        mdto['Exif.Photo.PixelXDimension'].value = w
+        mdto['Exif.Photo.PixelYDimension'].value = h
         mdto.write()
 
 def main():
