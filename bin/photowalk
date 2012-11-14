@@ -33,6 +33,9 @@ def help(prog, args):
     elif cmd == 'init':
         help_init(prog)
         sys.exit(0)
+    elif cmd == 'cand':
+        help_cand(prog)
+        sys.exit(0)
     else:
         msg = '%s: %s is an unknown command.\n' % (prog, cmd)
         sys.stderr.write(msg)
@@ -46,6 +49,11 @@ def help_init(prog):
 def help_resize(prog):
     '''Help for command resize.'''
     msg = '%s resize from_directory to_directory' % prog
+    print(msg)
+
+def help_cand(prog):
+    '''Help for command resize.'''
+    msg = '%s cand from_directory to_directory' % prog
     print(msg)
 
 def init():
