@@ -112,6 +112,7 @@ files from rawdn to todn.'''
             os.link(rawfn, tmp)
 
 def resize(frmdn, todn, size=2048):
+    '''frmdn, todn, size -> Image'''
     if not os.path.exists(todn):
         os.mkdir(todn)
     for i in os.listdir(frmdn):
