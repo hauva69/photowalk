@@ -8,6 +8,7 @@ a full-featured workflow program like Darktable or Aftershot Pro.
 - Copies images to YYYY/MM/DDDD directory tree.
 - Rotates JPG's according to EXIF data.
 - Resizes JPG's, to free Picasaweb maximum size 2048 px.
+- EXIF-data is updated when needed in resizing and rototation.
 
 DEPENDENCIES
 
@@ -15,6 +16,7 @@ DEPENDENCIES
 
 TODO
 
+- IPTC-data
 - Documentation which is usable for other people.
 - Renaming templates.
 - Geotagging
