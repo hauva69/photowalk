@@ -17,18 +17,28 @@ import os
 import shutil
 import sys
 
-def help():
+def help(prog, args):
     '''Help for each command.'''
     # FIXME: I need more help!
-    prog = sys.argv[0]
     try:
-        cmd = sys.argv[2]
+        cmd = args[1]
     except IndexError:
         print(__doc__)
         sys.exit(0)
     if cmd == 'resize':
         help_resize(prog)
         sys.exit(0)
+    elif cmd == 'init':
+        help_init(prog)
+        sys.exit(0)
+    else:
+        msg = '%s: %s unknown command.' % (prog, cmd)
+        sys.exit(4)
+
+def help_init(prog):
+    '''Help for command init.'''
+    msg = '%s init' % prog
+    print(msg)
 
 def help_resize(prog):
     '''Help for command resize.'''
@@ -117,19 +127,20 @@ def resize(frmdn, todn, size=2048):
         mdto.write()
 
 def main():
-    try:
-        cmd = sys.argv[1]
-    except IndexError:
-        help()
-        sys.exit(1)
+    prog = sys.argv[0]
     try:
         opts, args = getopt.getopt(sys.argv[1:], '-n')
     except getopt.GetoptError:
         help()
         sys.exit(3)
+    try:
+        cmd = args[0]
+    except IndexError:
+        help()
+        sys.exit(1)
     print opts
     print args
-    sys.exit(42)
+    print cmd
     if cmd == 'init':
         init()
     elif cmd == 'cand':
@@ -145,7 +156,7 @@ def main():
     elif cmd == 'import':
         frmdn = sys.argv
     elif cmd == 'help':
-        help()
+        help(prog, args)
 
 if __name__ == '__main__':
     main()
