@@ -11,6 +11,7 @@ import ao.av.rotate
 import Image
 import pyexiv2
 
+import ConfigParser
 import errno
 import getopt
 import os
@@ -127,7 +128,18 @@ def resize(frmdn, todn, size=2048):
         mdto.write()
 
 def main():
+    global config, logger
+
     prog = sys.argv[0]
+    try:
+        conf = os.environ['PHOTOWALK_HOME']
+    except KeyError:
+        msg = '%s: environment variable PHOTOWALK_HOME not defined.\n' % prog
+        sys.stderr.write(msg)
+        sys.exit(5)
+    config = ConfigParser.SafeConfigParser()
+    config.read(conffn)
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], '-n')
     except getopt.GetoptError:
@@ -144,7 +156,7 @@ def main():
     if cmd == 'init':
         init()
     elif cmd == 'cand':
-        cand(args[2], args[3])
+        cand(args[1], args[2])
     elif cmd == 'rawcand':
         rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == 'dist':
