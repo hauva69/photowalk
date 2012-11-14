@@ -4,9 +4,9 @@
 FIXME: Write the program documentation.
 '''
 
-import ao.av.exifdst
-import ao.av.resize
-import ao.av.rotate
+import photowalk.exifdst
+import photowalk.resize
+import photowalk.rotate
 
 import Image
 import pyexiv2
@@ -75,7 +75,7 @@ def init():
 def dist(origdn, treedn):
     '''Copies files from origdn to treedn/YYYY/MM/DD.'''
     try:
-        ao.av.exifdst.exifdst(origdn, treedn)
+        photowalk.exifdst.exifdst(origdn, treedn)
     except OSError, ex:
         msg = '%s\n' % str(ex)
         sys.stderr.write(msg)
@@ -118,8 +118,8 @@ def resize(frmdn, todn, size=2048):
         frm = '%s/%s' % (frmdn, i)
         to = '%s/%s' % (todn, i)
         im = Image.open(frm)
-        im = ao.av.rotate.rotate(im, frm)
-        im = ao.av.resize.scale(im, size)
+        im = photowalk.rotate.rotate(im, frm)
+        im = photowalk.resize.scale(im, size)
         im.save(to)
         mdfrm = pyexiv2.ImageMetadata(frm)
         mdfrm.read()

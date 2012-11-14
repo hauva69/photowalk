@@ -2,7 +2,7 @@
 
 from __future__ import division
 
-import ao.av
+import photowalk
 
 import Image
 import pyexiv2
@@ -13,7 +13,7 @@ import os
 import os.path
 import sys
 
-def scale(image, size=ao.av.PICASA_MAX_SIZE):
+def scale(image, size=photowalk.PICASA_MAX_SIZE):
     '''Returns a scaled image where the length of the longest edge is size.'''
     w, h = image.size
     if w == h:
