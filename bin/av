@@ -9,6 +9,7 @@ import ao.av.resize
 import ao.av.rotate
 
 import Image
+import pyexiv2
 
 import errno
 import os
@@ -107,6 +108,12 @@ def resize(frmdn, todn, size=2048):
         im = ao.av.rotate.rotate(im, frm)
         im = ao.av.resize.scale(im, size)
         im.save(to)
+        mdfrm = pyexiv2.ImageMetadata(frm)
+        mdfrm.read()
+        mdto = pyexiv2.ImageMetadata(to)
+        mdto.read()
+        pyexiv2.ImageMetadata.copy(mdfrm, mdto)
+        mdto.write()
 
 def main():
     try:
