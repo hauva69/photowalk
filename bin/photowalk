@@ -173,7 +173,8 @@ def main():
         todn = sys.argv[3]
         resize(frmdn, todn)
     elif cmd == 'import':
-        frmdn = sys.argv
+        # FIXME
+        pass
     elif cmd == 'help':
         help(prog, args)
 
