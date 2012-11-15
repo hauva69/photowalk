@@ -12,12 +12,13 @@ a full-featured workflow program like Darktable or Aftershot Pro.
 
 DEPENDENCIES
 
-
 - Python 2.7
 - pyexiv2
 - Python Imaging Library, PIL
 
 TODO
+
+The features I really want to have.
 
 - IPTC-data
 - Documentation which is usable for other people.
@@ -29,3 +30,14 @@ TODO
 - Picasa export
 - DVD backups
 
+IDEAS
+
+The feature that might be nice. Some of them might not even be possible in a 
+command line software.
+
+- Distortion correction via Lensfun.
+- Transveral chromatic aberration correction via Lensfun.
+- Vignettin correction via Lensfun. 
+- Colour contribution of the lens (correcdting said "yellowish" or "blueish" 
+images.
+- libraw usage.
