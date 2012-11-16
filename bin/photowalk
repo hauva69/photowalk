@@ -182,7 +182,7 @@ def main():
     elif cmd == 'rawcand':
         rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == 'dist':
-        dist(sys.argv[2], sys.argv[3])
+        dist(args[1], args[2])
     elif cmd == 'resize':
         frmdn = sys.argv[2]
         todn = sys.argv[3]
