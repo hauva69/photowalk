@@ -184,8 +184,8 @@ def main():
     elif cmd == 'dist':
         dist(args[1], args[2])
     elif cmd == 'resize':
-        frmdn = sys.argv[2]
-        todn = sys.argv[3]
+        frmdn = args[1]
+        todn = args[2]
         resize(frmdn, todn)
     elif cmd == 'import':
         # FIXME
