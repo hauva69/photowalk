@@ -127,7 +127,13 @@ def resize(frmdn, todn, size=2048):
     for i in os.listdir(frmdn):
         frm = '%s/%s' % (frmdn, i)
         to = '%s/%s' % (todn, i)
-        im = Image.open(frm)
+        try:
+            im = Image.open(frm)
+        except IOError, ex:
+            if errno.EISDIR == ex.errno:
+                continue
+            else:
+                raise ex
         im = photowalk.rotate.rotate(im, frm)
         im = photowalk.resize.scale(im, size)
         im.save(to)
