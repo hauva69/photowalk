@@ -180,7 +180,7 @@ def main():
     elif cmd == 'cand':
         cand(args[1], args[2])
     elif cmd == 'rawcand':
-        rawcand(sys.argv[2], sys.argv[3], sys.argv[4])
+        rawcand(args[1], args[2], args[3])
     elif cmd == 'dist':
         dist(args[1], args[2])
     elif cmd == 'resize':
