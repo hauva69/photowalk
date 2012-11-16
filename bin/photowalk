@@ -102,7 +102,8 @@ def cand(jpgdn, canddn):
     for i in os.listdir(jpgdn):
         fn = '%s/%s' % (jpgdn, i)
         tofn = '%s/%s' % (canddn, i)
-        os.link(fn, tofn)
+        if not os.path.exists(tofn):
+            os.link(fn, tofn)
 
 def rawcand(canddn, rawdn, todn):
     '''Takes all files from canddn and hard links the corresponding RAW
