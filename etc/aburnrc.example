@@ -1,0 +1,5 @@
+[default]
+
+device=/dev/sr0
+growisofs=/usr/bin/growisofs
+
