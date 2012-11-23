@@ -8,7 +8,9 @@ import sys
 ORIENTATION_KEY = 'Exif.Image.Orientation'
 
 def rotate(image, filename):
-    '''Image, filename -> image rotated according to ORIENTATION_KEY.'''
+    '''Image, filename -> image rotated according to ORIENTATION_KEY. 
+Throws KeyError if Exif.Image.Orientation is not found in the image.
+'''
     md = pyexiv2.ImageMetadata(filename)
     md.read()
     o = md[ORIENTATION_KEY].value
