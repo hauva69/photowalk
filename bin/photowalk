@@ -137,7 +137,11 @@ def resize(frmdn, todn, size=2048):
                 continue
             else:
                 raise ex
-        im = photowalk.rotate.rotate(im, frm)
+        try:
+            im = photowalk.rotate.rotate(im, frm)
+        except KeyError, ex:
+            msg = 'Cannot rotate image %s: %s\n' % (frm, str(ex))
+            sys.stderr.write(msg)
         im = photowalk.resize.scale(im, size)
         im.save(to)
         mdfrm = pyexiv2.ImageMetadata(frm)
@@ -147,8 +151,12 @@ def resize(frmdn, todn, size=2048):
         pyexiv2.ImageMetadata.copy(mdfrm, mdto)
         mdto['Exif.Image.Orientation']= 1
         w, h = im.size
-        mdto['Exif.Photo.PixelXDimension'].value = w
-        mdto['Exif.Photo.PixelYDimension'].value = h
+        try:
+            mdto['Exif.Photo.PixelXDimension'].value = w
+            mdto['Exif.Photo.PixelYDimension'].value = h
+        except KeyError:
+            msg = '%s on image %s\n' % (str(ex), frm)
+            sys.stderr.write(msg)
         mdto.write()
 
 def main():
