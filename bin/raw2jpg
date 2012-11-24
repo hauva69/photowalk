@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Make jpgs.
+
+PICASA_MAX_SIZE=2048
+SIZE="${PICASA_MAX_SIZE}"
+OUTDIR="orig_jpg"
+
+if [ ! -d "$OUTDIR" ] ; then
+    mkdir "$OUTDIR"
+fi
+
+ufraw-batch --wb=camera --gamma=0.45 --linearity=0.10 --exposure=0.0 \
+    --saturation=1.0 --out-type=jpg --compress=100 \
+    --overwrite --out-path="${OUTDIR}" -- "$@"
+
+
