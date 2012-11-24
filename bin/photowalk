@@ -57,7 +57,7 @@ def help_resize(prog):
     print(msg)
 
 def help_cand(prog):
-    '''Help for command resize.'''
+    '''Help for command cand.'''
     msg = '%s cand from_directory to_directory' % prog
     print(msg)
 
