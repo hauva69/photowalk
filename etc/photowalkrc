@@ -1,3 +1,7 @@
+[default]
+
+import_directory=/backup/hauva/Pictures/incoming
+
 [handlers]
 
 keys=filehandler
