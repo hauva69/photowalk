@@ -206,8 +206,9 @@ def main():
         todn = args[2]
         resize(frmdn, todn)
     elif cmd == 'import':
-        # FIXME
-        pass
+        importdir = config.get('defaults', 'import_directory')
+        frmdn = args[1]
+        dist(frmdn, importdir)
     elif cmd == 'help':
         help(prog, args)
 
