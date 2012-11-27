@@ -91,6 +91,20 @@ def init():
         elif fn.endswith('.jpg'):
             fn = '%s/%s' % (jpgdn, fn)
         shutil.move(i, fn)
+    try:
+        os.rmdir(nefdn)
+    except OSError, ex:
+        if errno.ENOTEMPTY == ex.errno:
+            pass
+        else:
+            raise ex
+    try:
+        os.rmdir(jpgdn)
+    except OSError, ex:
+        if errno.ENOTEMPTY == ex.errno:
+            pass
+        else:
+            raise ex
 
 def dist(origdn, treedn):
     '''Copies files from origdn to treedn/YYYY/MM/DD.'''
