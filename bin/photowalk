@@ -67,6 +67,17 @@ def help_rawcand(prog):
     msg = '%s rawcand cand_directory raw_directory to_directory' % prog
     print(msg)
 
+def getfn(fn):
+    dt = photowalk.exifdst.getdate(fn)
+    fn = fn.lower()
+    head, tail = os.path.split(fn)
+    name, suffix = tail.split('.')
+    foo, id = name.split('_')
+    id = int(id)
+    name = '%d-%02d-%02d_%04d_makela_ari.%s' % (dt.year, dt.month, dt.day, 
+                                                id, suffix)
+    return name
+
 def init():
     nefdn = 'orig_nef'
     jpgdn = 'orig_jpg'
@@ -85,7 +96,9 @@ def init():
         else:
             raise ex
     for i in os.listdir('.'):
-        fn = i.lower()
+        if not os.path.isfile(i):
+            continue
+        fn = getfn(i)
         if fn.endswith('.nef'):
             fn = '%s/%s' % (nefdn, fn)
         elif fn.endswith('.jpg'):
