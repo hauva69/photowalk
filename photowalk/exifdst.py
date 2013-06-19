@@ -24,7 +24,11 @@ def exifdst(origdn, treedn):
         try:
             dt = getdate(infn)
         except IOError, ex:
-            msg = '%s\n' % str(ex)
+            msg = '%s: %s\n' % (infn, str(ex))
+            sys.stderr.write(msg)
+            continue
+        except KeyError, ex:
+            msg = '%s: %s\n' % (infn, str(ex))
             sys.stderr.write(msg)
             continue
         sy = '%d' % dt.year
