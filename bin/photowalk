@@ -247,6 +247,8 @@ def main():
         dist(frmdn, importdir)
     elif cmd == 'help':
         help(prog, args)
+    else:
+        help(prog, args)
 
 if __name__ == '__main__':
     main()
