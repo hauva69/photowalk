@@ -1,9 +1,11 @@
 package main
 
 import (
-	l4g "code.google.com/p/log4go"
+	"github.com/golang/glog"
+	"fmt"
 )
 
 func main() {
-	l4g.Debug("foo")
+	glog.Info("Hello, World")
+	fmt.Println("hello, world")
 }
