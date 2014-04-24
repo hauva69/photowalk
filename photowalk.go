@@ -1,11 +1,11 @@
 package main
 
 import (
-//	"github.com/golang/glog"
+	"github.com/golang/glog"
 	"fmt"
 )
 
 func main() {
-//	glog.Info("Hello, World")
+	glog.Error("Hello, World")
 	fmt.Println("hello, world")
 }
