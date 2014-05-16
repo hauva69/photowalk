@@ -14,6 +14,7 @@ func main() {
 	}
 
 	for _, fd := range files {
-		log.Println(fd.Name())
+		fn := dn + "/" + fd.Name()
+		log.Println(fn)
 	}
 }
