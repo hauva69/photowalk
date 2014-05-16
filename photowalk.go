@@ -1,11 +1,19 @@
 package main
 
 import (
-	"github.com/golang/glog"
-	"fmt"
+	"log"
+	"io/ioutil"
 )
 
 func main() {
-	glog.Info("Hello, World")
-	fmt.Println("hello, world")
+	dn := "/work/uploads"
+	files, err := ioutil.ReadDir(dn)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, fd := range files {
+		log.Println(fd.Name())
+	}
 }
