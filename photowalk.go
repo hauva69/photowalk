@@ -34,6 +34,14 @@ func main() {
 
 	for _, fd := range files {
 		fn := dn + "/" + fd.Name()
+		fi, err := os.Stat(fn)
+
+		if (err != nil) {
+			log.Println(err)
+		} else if !fi.Mode().IsRegular() {
+			continue
+		}
+
 		im, err := getImage(fn)
 
 		if err != nil {
