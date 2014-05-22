@@ -12,12 +12,28 @@ func New() *Photograph {
 	return new(Photograph)
 }
 
+func (p Photograph) getMaximumDimension() int {
+	if p.Width > p.Height {
+		return p.Width
+	} else {
+		return p.Height
+	}
+}
+
 func (a ByMaximumDimension) Len() int {
 	return len(a)
 }
 
 // http://golang.org/pkg/sort/#Float64Slice.Less
+// http://golang.org/pkg/sort/#example__sortKeys
 
-func (a ByMaximumDimension) Less(i, j, int) bool {
+func (a ByMaximumDimension) Less(i, j int) bool {
+	iMax := a[i].getMaximumDimension()
+	jMax := a[j].getMaximumDimension()
 
+	return iMax < jMax
+}
+
+func (a ByMaximumDimension) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
 }
