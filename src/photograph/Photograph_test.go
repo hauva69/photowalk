@@ -2,6 +2,8 @@ package photograph
 
 import (
 	"testing"
+	"fmt"
+	"sort"
 )
 
 func TestNew (t *testing.T) {
@@ -36,3 +38,20 @@ func TestNew (t *testing.T) {
 	}
 }
 
+func TestSortByMaximumDimension(t *testing.T) {
+	images := []Photograph{
+		{"/images/3.nef", 3000, 356},
+		{"/images/1.jpg", 123, 1000},
+		{"/images/2.png", 223, 2000},
+	}
+
+	sortedImages := []Photograph{
+		{"/images/1.jpg", 123, 1000},
+		{"/images/2.png", 223, 2000},
+		{"/images/3.nef", 3000, 356},
+	}
+
+	fmt.Println(images)
+	sort.Sort(ByMaximumDimension(images))
+	fmt.Println(sortedImages)
+}
