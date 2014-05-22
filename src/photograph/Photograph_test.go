@@ -51,7 +51,11 @@ func TestSortByMaximumDimension(t *testing.T) {
 		{"/images/3.nef", 3000, 356},
 	}
 
-	fmt.Println(images)
 	sort.Sort(ByMaximumDimension(images))
-	fmt.Println(sortedImages)
+
+	for i := 0; i < len(images); i++ {
+		if images[i] != sortedImages[i] {
+			t.Errorf("images[%d] = %v, want %v", i, images[i], sortedImages[i])
+		}
+	}
 }
