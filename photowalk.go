@@ -6,6 +6,7 @@ import (
 	"image/jpeg"
 	"io/ioutil"
 	"os"
+	"fmt"
 )
 
 func getImage(fn string) (image.Image, error) {
@@ -48,7 +49,7 @@ func main() {
 			log.Printf("%s: %q\n", fn, err)
 		} else {
 			size := im.Bounds().Size()
-			log.Printf("%s: width=%d height=%d", fn, size.X, size.Y)
+			fmt.Printf("%s\t%d\t%d\n", fn, size.X, size.Y)
 		}
 	}
 }
