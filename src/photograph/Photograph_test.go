@@ -3,6 +3,7 @@ package photograph
 import (
 	"testing"
 	"sort"
+	"fmt"
 )
 
 func TestNew (t *testing.T) {
@@ -56,5 +57,14 @@ func TestSortByMaximumDimension(t *testing.T) {
 		if images[i] != sortedImages[i] {
 			t.Errorf("images[%d] = %v, want %v", i, images[i], sortedImages[i])
 		}
+	}
+}
+
+func TestString(t *testing.T) {
+	photo := Photograph{"/images/1.jpg", 1000, 2000}
+	expected := "/images/1.jpg\t1000\t2000"
+	got := fmt.Sprintf("%v", photo)
+	if got != expected {
+		t.Errorf("expected = %v, want %v", expected, got)
 	}
 }
