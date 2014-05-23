@@ -5,8 +5,10 @@ import (
 	"image"
 	"image/jpeg"
 	"io/ioutil"
+	"photograph"
 	"os"
 	"fmt"
+	"sort"
 )
 
 func getImage(fn string) (image.Image, error) {
@@ -33,7 +35,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, fd := range files {
+	photographs := make([]photograph.Photograph, 30000, 30000)
+
+	for i := 0; i < len(files); i++ {
+		fd := files[i]
 		fn := dn + "/" + fd.Name()
 		fi, err := os.Stat(fn)
 
@@ -49,7 +54,14 @@ func main() {
 			log.Printf("%s: %q\n", fn, err)
 		} else {
 			size := im.Bounds().Size()
-			fmt.Printf("%s\t%d\t%d\n", fn, size.X, size.Y)
-		}
+			photo := photograph.Photograph{fn, size.X, size.Y}
+			photographs[i] = photo
+				}
+	}
+
+	sort.Reverse(photograph.ByMaximumDimension(photographs))
+
+	for _, p := range photographs {
+		fmt.Printf("%v\n", p)
 	}
 }
