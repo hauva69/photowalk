@@ -1,5 +1,7 @@
 package photograph
 
+import "fmt"
+
 type Photograph struct {
 	OriginalFileName	string
 	Width	int
@@ -18,6 +20,10 @@ func (p Photograph) getMaximumDimension() int {
 	} else {
 		return p.Height
 	}
+}
+
+func (p Photograph) String() string {
+	return fmt.Sprintf("%v\t%d\t%d", p.OriginalFileName, p.Width, p.Height)
 }
 
 func (a ByMaximumDimension) Len() int {
