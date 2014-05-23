@@ -9,6 +9,7 @@ import (
 	"os"
 	"fmt"
 	"sort"
+	"strings"
 )
 
 func getImage(fn string) (image.Image, error) {
@@ -35,11 +36,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	photographs := make([]photograph.Photograph, 30000, 30000)
+	photographs := make([]photograph.Photograph, 0)
 
-	for i := 0; i < len(files); i++ {
-		fd := files[i]
+	for _, fd := range files {
+		fmt.Println("hello")
 		fn := dn + "/" + fd.Name()
+
+		if strings.Contains(fn, "thumb") {
+			continue
+		}
+
 		fi, err := os.Stat(fn)
 
 		if (err != nil) {
@@ -55,13 +61,14 @@ func main() {
 		} else {
 			size := im.Bounds().Size()
 			photo := photograph.Photograph{fn, size.X, size.Y}
-			photographs[i] = photo
-				}
+			photographs = append(photographs, photo)
+		}
 	}
 
 	sort.Reverse(photograph.ByMaximumDimension(photographs))
 
 	for _, p := range photographs {
+		fmt.Println("bar")
 		fmt.Printf("%v\n", p)
 	}
 }
