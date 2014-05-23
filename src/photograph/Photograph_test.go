@@ -2,7 +2,6 @@ package photograph
 
 import (
 	"testing"
-	"fmt"
 	"sort"
 )
 
