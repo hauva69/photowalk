@@ -1,11 +1,11 @@
 package main
 
 import (
-	"log"
+	"github.com/hauva69/photowalk/logging"
 	"image"
 	"image/jpeg"
 	"io/ioutil"
-	"photograph"
+	"github.com/hauva69/photowalk/photograph"
 	"os"
 	"fmt"
 	"sort"
@@ -29,17 +29,16 @@ func getImage(fn string) (image.Image, error) {
 }
 
 func main() {
-	dn := "/work/uploads"
+	dn := "examples"
 	files, err := ioutil.ReadDir(dn)
 
 	if err != nil {
-		log.Fatal(err)
+		logging.Log.Fatal(err)
 	}
 
 	photographs := make([]photograph.Photograph, 0)
 
 	for _, fd := range files {
-		fmt.Println("hello")
 		fn := dn + "/" + fd.Name()
 
 		if strings.Contains(fn, "thumb") {
@@ -49,7 +48,7 @@ func main() {
 		fi, err := os.Stat(fn)
 
 		if (err != nil) {
-			log.Println(err)
+			logging.Log.Error("%v", err)
 		} else if !fi.Mode().IsRegular() {
 			continue
 		}
@@ -57,7 +56,7 @@ func main() {
 		im, err := getImage(fn)
 
 		if err != nil {
-			log.Printf("%s: %q\n", fn, err)
+			logging.Log.Error("%s: %q", fn, err)
 		} else {
 			size := im.Bounds().Size()
 			photo := photograph.Photograph{fn, size.X, size.Y}
@@ -68,7 +67,6 @@ func main() {
 	sort.Reverse(photograph.ByMaximumDimension(photographs))
 
 	for _, p := range photographs {
-		fmt.Println("bar")
 		fmt.Printf("%v\n", p)
 	}
 }
