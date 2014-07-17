@@ -1,13 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"github.com/hauva69/photowalk/logging"
+	"github.com/hauva69/photowalk/photograph"
 	"image"
 	"image/jpeg"
 	"io/ioutil"
-	"github.com/hauva69/photowalk/photograph"
 	"os"
-	"fmt"
 	"sort"
 	"strings"
 )
@@ -47,7 +47,7 @@ func main() {
 
 		fi, err := os.Stat(fn)
 
-		if (err != nil) {
+		if err != nil {
 			logging.Log.Error("%v", err)
 		} else if !fi.Mode().IsRegular() {
 			continue

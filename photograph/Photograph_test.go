@@ -1,12 +1,12 @@
 package photograph
 
 import (
-	"testing"
-	"sort"
 	"fmt"
+	"sort"
+	"testing"
 )
 
-func TestNew (t *testing.T) {
+func TestNew(t *testing.T) {
 	const image = "/path/to/image/photowalk.png"
 	const width, height = 13, 42
 	im := New()

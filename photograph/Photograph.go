@@ -3,9 +3,9 @@ package photograph
 import "fmt"
 
 type Photograph struct {
-	OriginalFileName	string
-	Width	int
-	Height	int
+	OriginalFileName string
+	Width            int
+	Height           int
 }
 
 type ByMaximumDimension []Photograph

@@ -1,8 +1,8 @@
 package logging
 
 import (
-	stdlog "log"
 	"github.com/op/go-logging"
+	stdlog "log"
 	"os"
 )
 
