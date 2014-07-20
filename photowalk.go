@@ -13,6 +13,12 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 }
 
 func main() {
+	if 2 != len(os.Args) {
+		msg := "Source directorys as a command line argument " + 
+			"required."
+		logging.Log.Fatal(msg)
+		os.Exit(2)
+	}
 	sourceDirectory := os.Args[1]
 	logging.Log.Debug("src=%v", sourceDirectory)
 	files, err := ioutil.ReadDir(sourceDirectory)
