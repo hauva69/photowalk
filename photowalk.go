@@ -24,7 +24,7 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 
 func main() {
 	if 2 != len(os.Args) {
-		msg := "Source directorys as a command line argument " + 
+		msg := "Source directorys as a command line argument " +
 			"required."
 		logging.Log.Fatal(msg)
 		os.Exit(2)
