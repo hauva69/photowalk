@@ -1,6 +1,11 @@
 package photograph
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/hauva69/photowalk/logging"
+	"github.com/rwcarlsen/goexif/exif"
+	"github.com/rwcarlsen/goexif/tiff"
+)
 
 type Photograph struct {
 	OriginalFileName string
@@ -22,6 +27,12 @@ func (p Photograph) getMaximumDimension() int {
 	}
 }
 
+// Walk implements exif.Walker interface.
+func (p Photograph) Walk(field exif.FieldName, tag *tiff.Tag) Error {
+	logging.Log.Info("%v", field)
+}
+
+// String returns the fields of the Photograph as a string.
 func (p Photograph) String() string {
 	return fmt.Sprintf("%v\t%d\t%d", p.OriginalFileName, p.Width, p.Height)
 }
