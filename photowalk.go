@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/hauva69/photowalk/logging"
+	"github.com/hauva69/photowalk/photograph"
 	"github.com/rwcarlsen/goexif/exif"
 	"io/ioutil"
 	"os"
@@ -20,6 +21,8 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	if err != nil {
 		logging.Log.Error("%v", err)
 	}
+	photo := photograph.Photograph{file.Name(), 12, 43}
+	logging.Log.Info("%v", photo)
 	logging.Log.Info("%v", exifData)
 }
 
