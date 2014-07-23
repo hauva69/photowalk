@@ -28,8 +28,10 @@ func (p Photograph) getMaximumDimension() int {
 }
 
 // Walk implements exif.Walker interface.
-func (p Photograph) Walk(field exif.FieldName, tag *tiff.Tag) Error {
+func (p Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
 	logging.Log.Info("%v", field)
+
+	return nil
 }
 
 // String returns the fields of the Photograph as a string.
