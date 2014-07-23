@@ -16,10 +16,11 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 		logging.Log.Error("%v", err)
 	}
 	defer fd.Close()
-	_, err = exif.Decode(fd)
+	exifData, err := exif.Decode(fd)
 	if err != nil {
 		logging.Log.Error("%v", err)
 	}
+	logging.Log.Info("%v", exifData)
 }
 
 func main() {
