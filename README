@@ -17,6 +17,9 @@ DEPENDENCIES
 
 - golang 1.3 (Might work with earlier releases, though, but it is not
 supported.)
+- github.com/rwcarlsen/goexif/exif, 
+  https://godoc.org/github.com/rwcarlsen/goexif/exif
+- github.com/op/go-logging
 
 TODO
 
