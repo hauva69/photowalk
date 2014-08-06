@@ -23,7 +23,6 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	}
 	photo := photograph.Photograph{file.Name(), 12, 43}
 	logging.Log.Info("%v", photo)
-	logging.Log.Info("%v", exifData)
 	logging.Log.Info("%v", exifData.Walk(photo))
 }
 
@@ -44,7 +43,6 @@ func main() {
 
 	for i := range files {
 		f := files[i]
-		logging.Log.Debug("file=%s", f.Name())
 		if f.IsDir() {
 			logging.Log.Warning("%s is a directory", f)
 		} else {
