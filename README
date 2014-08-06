@@ -21,6 +21,10 @@ supported.)
   https://godoc.org/github.com/rwcarlsen/goexif/exif
 - github.com/op/go-logging
 
+POSSIBLY USEFUL LINKS
+
+- http://www.media.mit.edu/pia/Research/deepview/exif.html
+
 TODO
 
 The features I really want to have.
