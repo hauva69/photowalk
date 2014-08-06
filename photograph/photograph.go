@@ -29,7 +29,7 @@ func (p Photograph) getMaximumDimension() int {
 
 // Walk implements exif.Walker interface.
 func (p Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
-	logging.Log.Info("%v", field)
+	logging.Log.Info("%v: %v", field, tag)
 
 	return nil
 }
