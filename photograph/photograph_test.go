@@ -30,11 +30,11 @@ func TestNew(t *testing.T) {
 	}
 
 	if im.Width != width {
-		t.Errorf("Width = %v, want %v", im.Width, width, height)
+		t.Errorf("Width = %v, want %v", im.Width, width)
 	}
 
 	if im.Height != height {
-		t.Errorf("Height = %v, want %v", im.Height, width, height)
+		t.Errorf("Height = %v, want %v", im.Height, height)
 	}
 }
 
