@@ -21,7 +21,7 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	if err != nil {
 		logging.Log.Error("%v", err)
 	}
-	photo := photograph.Photograph{OriginalFileName: file.Name()}
+	photo := photograph.New()
 	logging.Log.Info("%v", photo)
 	logging.Log.Info("%v", exifData.Walk(photo))
 }

@@ -23,7 +23,7 @@ func New() *Photograph {
 	return p
 }
 
-func (p Photograph) getMaximumDimension() int {
+func (p *Photograph) getMaximumDimension() int {
 	if p.Width > p.Height {
 		return p.Width
 	} else {
@@ -32,7 +32,7 @@ func (p Photograph) getMaximumDimension() int {
 }
 
 // Walk implements exif.Walker interface.
-func (p Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
+func (p *Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
 	logging.Log.Info("%v: %v", field, tag)
 	// p.ExifMap[field] = tag
 
@@ -40,7 +40,7 @@ func (p Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
 }
 
 // String returns the fields of the Photograph as a string.
-func (p Photograph) String() string {
+func (p *Photograph) String() string {
 	return fmt.Sprintf("%v\t%d\t%d", p.OriginalFileName, p.Width, p.Height)
 }
 
