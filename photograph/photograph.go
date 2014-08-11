@@ -5,6 +5,7 @@ import (
 	"github.com/hauva69/photowalk/logging"
 	"github.com/rwcarlsen/goexif/exif"
 	"github.com/rwcarlsen/goexif/tiff"
+	"os"
 )
 
 type ExifMap map[exif.FieldName]*tiff.Tag
@@ -21,6 +22,23 @@ type ByMaximumDimension []Photograph
 func New() *Photograph {
 	p := new(Photograph)
 	return p
+}
+
+func (p *Photograph) Load(fileName string) error {
+	fd, err := os.Open(fileName)
+	if err != nil {
+		logging.Log.Error("%v", err)
+		return err
+	}
+	defer fd.Close()
+	exifData, err := exif.Decode(fd)
+	if err != nil {
+		logging.Log.Error("%v", err)
+		return err
+	}
+	logging.Log.Info("%v", exifData.Walk(p))
+
+	return nil
 }
 
 func (p *Photograph) getMaximumDimension() int {

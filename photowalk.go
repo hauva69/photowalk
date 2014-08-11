@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/hauva69/photowalk/logging"
 	"github.com/hauva69/photowalk/photograph"
-	"github.com/rwcarlsen/goexif/exif"
 	"io/ioutil"
 	"os"
 )
@@ -12,18 +11,9 @@ import (
 func handleFile(sourceDirectory string, file os.FileInfo) {
 	fn := fmt.Sprintf("%s/%s", sourceDirectory, file.Name())
 	logging.Log.Debug("filename=%s", fn)
-	fd, err := os.Open(fn)
-	if err != nil {
-		logging.Log.Error("%v", err)
-	}
-	defer fd.Close()
-	exifData, err := exif.Decode(fd)
-	if err != nil {
-		logging.Log.Error("%v", err)
-	}
 	photo := photograph.New()
+	photo.Load(fn)
 	logging.Log.Info("photo=%v", photo)
-	logging.Log.Info("%v", exifData.Walk(photo))
 }
 
 func main() {
