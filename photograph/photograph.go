@@ -19,11 +19,13 @@ type Photograph struct {
 
 type ByMaximumDimension []Photograph
 
+// New returns a pointer to a new Photograph.
 func New() *Photograph {
 	p := new(Photograph)
 	return p
 }
 
+// Load initializes a Photograph from a file.
 func (p *Photograph) Load(fileName string) error {
 	fd, err := os.Open(fileName)
 	if err != nil {
@@ -37,6 +39,7 @@ func (p *Photograph) Load(fileName string) error {
 		return err
 	}
 	logging.Log.Info("%v", exifData.Walk(p))
+	p.OriginalFileName = fileName
 
 	return nil
 }
@@ -49,7 +52,8 @@ func (p *Photograph) getMaximumDimension() int {
 	}
 }
 
-// Walk implements exif.Walker interface.
+// Walk implements exif.Walker interface and initializes the Photograph
+// from the EXIF data.
 func (p *Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
 	logging.Log.Info("%v: %v", field, tag)
 	// p.ExifMap[field] = tag
