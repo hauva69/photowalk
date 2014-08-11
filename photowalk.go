@@ -34,7 +34,7 @@ func main() {
 		os.Exit(2)
 	}
 	sourceDirectory := os.Args[1]
-	logging.Log.Debug("src=%v", sourceDirectory)
+	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
 	files, err := ioutil.ReadDir(sourceDirectory)
 	if err != nil {
 		logging.Log.Fatal("%v", err)
