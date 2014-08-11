@@ -7,16 +7,20 @@ import (
 	"github.com/rwcarlsen/goexif/tiff"
 )
 
+type ExifMap map[exif.FieldName]*tiff.Tag
+
 type Photograph struct {
 	OriginalFileName string
 	Width            int
 	Height           int
+	ExifMap
 }
 
 type ByMaximumDimension []Photograph
 
 func New() *Photograph {
-	return new(Photograph)
+	p := new(Photograph)
+	return p
 }
 
 func (p Photograph) getMaximumDimension() int {
@@ -30,6 +34,7 @@ func (p Photograph) getMaximumDimension() int {
 // Walk implements exif.Walker interface.
 func (p Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
 	logging.Log.Info("%v: %v", field, tag)
+	// p.ExifMap[field] = tag
 
 	return nil
 }
