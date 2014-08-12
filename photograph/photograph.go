@@ -38,7 +38,11 @@ func (p *Photograph) Load(fileName string) error {
 		logging.Log.Error("%v", err)
 		return err
 	}
-	logging.Log.Info("%v", exifData.Walk(p))
+	err = exifData.Walk(p)
+	if err != nil {
+		logging.Log.Error("%v", err)
+		return err
+	}
 	p.OriginalFileName = fileName
 
 	return nil
