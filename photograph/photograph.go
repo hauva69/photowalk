@@ -22,6 +22,7 @@ type ByMaximumDimension []Photograph
 // New returns a pointer to a new Photograph.
 func New() *Photograph {
 	p := new(Photograph)
+	p.ExifMap = make(ExifMap)
 	return p
 }
 
@@ -60,7 +61,7 @@ func (p *Photograph) getMaximumDimension() int {
 // from the EXIF data.
 func (p *Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
 	logging.Log.Info("%v: %v", field, tag)
-	// p.ExifMap[field] = tag
+	p.ExifMap[field] = tag
 
 	return nil
 }
