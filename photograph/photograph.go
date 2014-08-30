@@ -28,6 +28,7 @@ func New() *Photograph {
 
 // Load initializes a Photograph from a file.
 func (p *Photograph) Load(fileName string) error {
+	p.OriginalFileName = fileName
 	fd, err := os.Open(fileName)
 	if err != nil {
 		logging.Log.Error("%v", err)
@@ -44,7 +45,6 @@ func (p *Photograph) Load(fileName string) error {
 		logging.Log.Error("%v", err)
 		return err
 	}
-	p.OriginalFileName = fileName
 
 	return nil
 }
