@@ -12,7 +12,10 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	fn := fmt.Sprintf("%s/%s", sourceDirectory, file.Name())
 	logging.Log.Debug("filename=%s", fn)
 	photo := photograph.New()
-	photo.Load(fn)
+	err := photo.Load(fn)
+	if err != nil {
+		logging.Log.Error("%s", err)
+	}
 	logging.Log.Debug("%d EXIF tags", len(photo.ExifMap))
 	for tag, value := range photo.ExifMap {
 		fmt.Printf("%v\t%v\n", tag, value)
