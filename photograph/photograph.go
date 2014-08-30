@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/hauva69/photowalk/logging"
 	"github.com/rwcarlsen/goexif/exif"
+	"github.com/rwcarlsen/goexif/mknote"
 	"github.com/rwcarlsen/goexif/tiff"
 	"os"
 )
@@ -39,6 +40,13 @@ func (p *Photograph) Load(fileName string) error {
 	if err != nil {
 		logging.Log.Error("%v", err)
 		return err
+	}
+	for _, maker := range mknote.All {
+		err = maker.Parse(exifData)
+		if err != nil {
+			logging.Log.Error("v", err)
+			return err
+		}
 	}
 	err = exifData.Walk(p)
 	if err != nil {
