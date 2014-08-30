@@ -18,7 +18,7 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	}
 	logging.Log.Debug("%d EXIF tags", len(photo.ExifMap))
 	for tag, value := range photo.ExifMap {
-		fmt.Printf("%v\t%v\n", tag, value)
+		fmt.Printf("%s\t%s\n", tag, value)
 	}
 	logging.Log.Info("photo=%v", photo)
 }
