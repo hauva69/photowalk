@@ -36,17 +36,13 @@ func (p *Photograph) Load(fileName string) error {
 		return err
 	}
 	defer fd.Close()
+	for _, parser := range mknote.All {
+		exif.RegisterParsers(parser)
+	}
 	exifData, err := exif.Decode(fd)
 	if err != nil {
 		logging.Log.Error("%v", err)
 		return err
-	}
-	for _, maker := range mknote.All {
-		err = maker.Parse(exifData)
-		if err != nil {
-			logging.Log.Error("v", err)
-			return err
-		}
 	}
 	err = exifData.Walk(p)
 	if err != nil {
