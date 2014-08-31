@@ -7,12 +7,14 @@ import (
 	"github.com/rwcarlsen/goexif/mknote"
 	"github.com/rwcarlsen/goexif/tiff"
 	"os"
+	"time"
 )
 
 type ExifMap map[exif.FieldName]*tiff.Tag
 
 type Photograph struct {
 	OriginalFileName string
+	Time             time.Time
 	Width            int
 	Height           int
 	ExifMap
@@ -58,9 +60,16 @@ func (p *Photograph) Load(fileName string) error {
 // Walk implements exif.Walker interface and initializes the Photograph
 // from the EXIF data.
 func (p *Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
+	var err error
 	logging.Log.Info("%v: %v", field, tag)
 	p.ExifMap[field] = tag
-
+	if "DateTime" == field {
+		const timeFormat = "2006:01:02 15:04:05"
+		p.Time, err = time.Parse(timeFormat, tag.StringVal())
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
