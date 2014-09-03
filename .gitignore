@@ -1,6 +1,8 @@
 *.pyc
 *~
+*#*
 .idea
 photowalk.iml
 photowalk
+photowalk.log
 
