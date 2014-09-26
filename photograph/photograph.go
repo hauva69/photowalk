@@ -69,5 +69,6 @@ func (p *Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
 
 // String returns the fields of the Photograph as a string.
 func (p *Photograph) String() string {
-	return fmt.Sprintf("%v\t%d\t%d", p.OriginalFileName, p.Width, p.Height)
+	return fmt.Sprintf("%v\t%d\t%d", p.OriginalFileName, p.Width,
+		p.Height, p.Time)
 }
