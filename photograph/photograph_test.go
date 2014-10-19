@@ -12,32 +12,19 @@ func TestNew(t *testing.T) {
 	im.OriginalFileName = image
 	im.Width = width
 	im.Height = height
+	fmt.Printf("im=%v\n", im)
 
 	if im.OriginalFileName != image {
-		t.Errorf("OriginalFileName = %s, want %s",
+		t.Errorf("OriginalFileName=%s, want %s",
 			im.OriginalFileName, image)
 	}
 
 	if im.Width != width {
-		t.Errorf("Width = %v, want %d", im.Width, width)
+		t.Errorf("Width=%v, want %d", im.Width, width)
 	}
 
 	if im.Height != height {
-		t.Errorf("Height = %v, want 0", im.Height, height)
-	}
-
-	im = New()
-
-	if im.OriginalFileName != image {
-		t.Errorf("OriginalFileName = %v, want %v", im.OriginalFileName, image)
-	}
-
-	if im.Width != width {
-		t.Errorf("Width = %v, want %v", im.Width, width)
-	}
-
-	if im.Height != height {
-		t.Errorf("Height = %v, want %v", im.Height, height)
+		t.Errorf("Height=%v, want %d", im.Height, height)
 	}
 }
 
