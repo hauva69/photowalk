@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-var Log = logging.MustGetLogger("feedupdater")
+var Log = logging.MustGetLogger("photowalk")
 
 func Init() {
 	logging.SetFormatter(logging.MustStringFormatter("%{level} %{id} %{message}"))
