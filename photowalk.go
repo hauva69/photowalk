@@ -23,6 +23,10 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	logging.Log.Info("photo=%v", photo)
 }
 
+func help() {
+	fmt.Println("FIXME")
+}
+
 func main() {
 	if 2 != len(os.Args) {
 		msg := "Source directorys as a command line argument " +
@@ -30,6 +34,16 @@ func main() {
 		logging.Log.Fatal(msg)
 		os.Exit(2)
 	}
+
+	command := os.Args[1]
+
+	switch {
+	default:
+		help()
+	case "list" == command:
+		logging.Log.Debug("command=%s", command)
+	}
+	os.Exit(42)
 	sourceDirectory := os.Args[1]
 	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
 	files, err := ioutil.ReadDir(sourceDirectory)
