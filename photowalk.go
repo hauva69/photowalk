@@ -50,7 +50,7 @@ Options:
   --moored      Moored (anchored) mine.
   --drifting    Drifting mine.`
 
-	arguments, _ := docopt.Parse(usage, nil, true, "Naval Fate 2.0", false)
+	arguments, _ := docopt.Parse(usage, nil, true, "Photowalk 0.01", false)
 	fmt.Println(arguments)
 
 	command := os.Args[1]
@@ -58,7 +58,7 @@ Options:
 	switch {
 	default:
 		help()
-	case "list" == command:
+	case command == "list":
 		logging.Log.Debug("command=%s", command)
 	}
 	os.Exit(42)
