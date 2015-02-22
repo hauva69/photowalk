@@ -26,7 +26,21 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 }
 
 func handleDirectoryTree(sourceDirectory string) {
+	err := filepath.Walk(sourceDirectory, walkFunc)
+	if err != nil {
+		logging.Log.Fatal(err)
+		os.Exit(5)
+	}
+}
 
+func walkFunc(path string, info os.FileInfo, err error) error {
+	if err != nil {
+		logging.Log.Fatal(err)
+		os.Exit(2)
+	}
+	logging.Log.Debug(path)
+
+	return nil
 }
 
 func handleDirectory(sourceDirectory string) {
