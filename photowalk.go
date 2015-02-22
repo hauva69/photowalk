@@ -24,11 +24,28 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	logging.Log.Info("photo=%v", photo)
 }
 
+func handleDirectory(sourceDirectory string) {
+	files, err := ioutil.ReadDir(sourceDirectory)
+	if err != nil {
+		logging.Log.Fatal("%v", err)
+		os.Exit(4)
+	}
+
+	for i := range files {
+		f := files[i]
+		if f.IsDir() {
+			logging.Log.Warning("%s is a directory", f)
+		} else {
+			handleFile(sourceDirectory, f)
+		}
+	}
+}
+
 func main() {
 	usage := `Photowalk.
 
 Usage:
-  photowalk list <sourceDir>
+  photowalk [-r] list <sourceDir>
   photowalk -h | --help
   photowalk --version
 
@@ -46,18 +63,9 @@ Options:
 	logging.Log.Debug(fmt.Sprintf("%v", arguments))
 	sourceDirectory := arguments["<sourceDir>"].(string)
 	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
-	files, err := ioutil.ReadDir(sourceDirectory)
-	if err != nil {
-		logging.Log.Fatal("%v", err)
-		os.Exit(4)
-	}
-
-	for i := range files {
-		f := files[i]
-		if f.IsDir() {
-			logging.Log.Warning("%s is a directory", f)
-		} else {
-			handleFile(sourceDirectory, f)
-		}
+	if arguments["-r"].(bool) {
+		fmt.Println("recursive")
+	} else {
+		handleDirectory(sourceDirectory)
 	}
 }
