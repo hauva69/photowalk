@@ -24,6 +24,10 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	logging.Log.Info("photo=%v", photo)
 }
 
+func handleDirectoryTree(sourceDirectory string) {
+
+}
+
 func handleDirectory(sourceDirectory string) {
 	files, err := ioutil.ReadDir(sourceDirectory)
 	if err != nil {
@@ -64,7 +68,7 @@ Options:
 	sourceDirectory := arguments["<sourceDir>"].(string)
 	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
 	if arguments["-r"].(bool) {
-		fmt.Println("recursive")
+		handleDirectoryTree(sourceDirectory)
 	} else {
 		handleDirectory(sourceDirectory)
 	}
