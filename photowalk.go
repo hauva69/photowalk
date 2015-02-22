@@ -66,7 +66,7 @@ Options:
 	files, err := ioutil.ReadDir(sourceDirectory)
 	if err != nil {
 		logging.Log.Fatal("%v", err)
-		os.Exit(1)
+		os.Exit(4)
 	}
 
 	for i := range files {
