@@ -43,7 +43,13 @@ Options:
   -h --help     Show this screen.
   --version     Show version.`
 
-	arguments, _ := docopt.Parse(usage, nil, true, "Photowalk 0.01", false)
+	arguments, err := docopt.Parse(usage, nil, true, "Photowalk 0.01",
+		false)
+	if err != nil {
+		logging.Log.Fatal(err)
+		os.Exit(3)
+	}
+
 	fmt.Println(arguments)
 
 	command := os.Args[1]
