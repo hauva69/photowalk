@@ -45,10 +45,7 @@ Usage:
 
 Options:
   -h --help     Show this screen.
-  --version     Show version.
-  --speed=<kn>  Speed in knots [default: 10].
-  --moored      Moored (anchored) mine.
-  --drifting    Drifting mine.`
+  --version     Show version.`
 
 	arguments, _ := docopt.Parse(usage, nil, true, "Photowalk 0.01", false)
 	fmt.Println(arguments)
