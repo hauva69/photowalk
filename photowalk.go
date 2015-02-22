@@ -7,10 +7,11 @@ import (
 	"github.com/hauva69/photowalk/photograph"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 func handleFile(sourceDirectory string, file os.FileInfo) {
-	fn := fmt.Sprintf("%s/%s", sourceDirectory, file.Name())
+	fn := filepath.Join(sourceDirectory, file.Name())
 	logging.Log.Debug("filename=%s", fn)
 	photo := photograph.New()
 	err := photo.Load(fn)
