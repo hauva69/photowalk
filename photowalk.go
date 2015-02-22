@@ -43,9 +43,8 @@ Options:
 		os.Exit(3)
 	}
 
-	fmt.Println(arguments)
-	os.Exit(42)
-	sourceDirectory := os.Args[1]
+	logging.Log.Debug(fmt.Sprintf("%v", arguments))
+	sourceDirectory := arguments["<sourceDir>"].(string)
 	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
 	files, err := ioutil.ReadDir(sourceDirectory)
 	if err != nil {
