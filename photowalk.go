@@ -25,17 +25,10 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 }
 
 func main() {
-	if 2 != len(os.Args) {
-		msg := "Source directory as a command line argument " +
-			"required."
-		logging.Log.Fatal(msg)
-		os.Exit(2)
-	}
-
 	usage := `Photowalk.
 
 Usage:
-  photowalk list
+  photowalk list <sourceDir>
   photowalk -h | --help
   photowalk --version
 
@@ -51,15 +44,6 @@ Options:
 	}
 
 	fmt.Println(arguments)
-
-	command := os.Args[1]
-
-	switch {
-	default:
-		break
-	case command == "list":
-		logging.Log.Debug("command=%s", command)
-	}
 	os.Exit(42)
 	sourceDirectory := os.Args[1]
 	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
