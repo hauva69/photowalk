@@ -38,12 +38,12 @@ func walkFunc(path string, info os.FileInfo, err error) error {
 		logging.Log.Fatal(err)
 		os.Exit(2)
 	}
-	logging.Log.Debug(path)
+	fmt.Println(path)
 
 	return nil
 }
 
-func handleDirectory(sourceDirectory string) {
+func handleDirectory(sourceDirectory string, listOnly bool) {
 	files, err := ioutil.ReadDir(sourceDirectory)
 	if err != nil {
 		logging.Log.Fatal("%v", err)
@@ -55,7 +55,12 @@ func handleDirectory(sourceDirectory string) {
 		if f.IsDir() {
 			logging.Log.Warning("%s is a directory", f)
 		} else {
-			handleFile(sourceDirectory, f)
+			if listOnly {
+				fmt.Println(filepath.Join(sourceDirectory,
+					f.Name()))
+			} else {
+				handleFile(sourceDirectory, f)
+			}
 		}
 	}
 }
@@ -79,12 +84,18 @@ Options:
 		os.Exit(3)
 	}
 
+	listOnly := false
+
+	if arguments["list"].(bool) {
+		listOnly = true
+	}
+
 	logging.Log.Debug(fmt.Sprintf("%v", arguments))
 	sourceDirectory := arguments["<sourceDir>"].(string)
 	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
 	if arguments["-r"].(bool) {
 		handleDirectoryTree(sourceDirectory)
 	} else {
-		handleDirectory(sourceDirectory)
+		handleDirectory(sourceDirectory, listOnly)
 	}
 }
