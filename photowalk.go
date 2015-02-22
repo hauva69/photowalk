@@ -24,10 +24,6 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	logging.Log.Info("photo=%v", photo)
 }
 
-func help() {
-	fmt.Println("FIXME")
-}
-
 func main() {
 	if 2 != len(os.Args) {
 		msg := "Source directory as a command line argument " +
@@ -54,7 +50,7 @@ Options:
 
 	switch {
 	default:
-		help()
+		break
 	case command == "list":
 		logging.Log.Debug("command=%s", command)
 	}
