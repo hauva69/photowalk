@@ -75,3 +75,7 @@ func (p *Photograph) String() string {
 	return fmt.Sprintf("%s\t%d\t%d\t%v", p.OriginalFileName, p.Width,
 		p.Height, p.Time)
 }
+
+func isPhotographyFile() bool {
+	return false
+}
