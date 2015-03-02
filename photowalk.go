@@ -53,8 +53,9 @@ func handleDirectory(sourceDirectory string, listOnly bool) {
 	for i := range files {
 		f := files[i]
 		if f.IsDir() {
-			logging.Log.Warning("%s is a directory", f)
+			logging.Log.Warning("%s is a directory", f.Name())
 		} else {
+			photograph.IsPhotographyFile(f.Name())
 			if listOnly {
 				fmt.Println(filepath.Join(sourceDirectory,
 					f.Name()))

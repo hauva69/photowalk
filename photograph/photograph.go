@@ -7,6 +7,7 @@ import (
 	"github.com/rwcarlsen/goexif/mknote"
 	"github.com/rwcarlsen/goexif/tiff"
 	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -76,6 +77,7 @@ func (p *Photograph) String() string {
 		p.Height, p.Time)
 }
 
-func isPhotographyFile() bool {
+func IsPhotographyFile(filename string) bool {
+	logging.Log.Debug(filepath.Ext(filename))
 	return false
 }
