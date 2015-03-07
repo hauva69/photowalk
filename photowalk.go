@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -42,7 +43,15 @@ func handleFile(sourceDirectory string, targetDirectory string,
 	if err != nil {
 		logging.Log.Error("%s", err)
 	}
-	targetFile := filepath.Join(targetDirectory, file.Name())
+	s := strings.Replace(file.Name(), "_DSC", "", 1)
+	s = strings.Replace(s, "DSC_", "", 1)
+	ext := filepath.Ext(s)
+	s = strings.Replace(s, ext, "", 1)
+	ext = strings.ToLower(ext)
+	logging.Log.Debug("ext=%s", ext)
+	targetFile := fmt.Sprintf("%s_%s_%s%s", photo.Iso8601(), s,
+		"makela_ari", ext)
+	targetFile = filepath.Join(targetDirectory, targetFile)
 	logging.Log.Debug("targetFile=%s", targetFile)
 	ioutil.WriteFile(targetFile, photo.Data, 0600)
 }
