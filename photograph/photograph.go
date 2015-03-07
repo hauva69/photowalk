@@ -6,6 +6,7 @@ import (
 	"github.com/rwcarlsen/goexif/exif"
 	"github.com/rwcarlsen/goexif/mknote"
 	"github.com/rwcarlsen/goexif/tiff"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -15,6 +16,7 @@ type ExifMap map[exif.FieldName]*tiff.Tag
 
 type Photograph struct {
 	OriginalFileName string
+	Data             []byte
 	Time             time.Time
 	Width            int
 	Height           int
@@ -44,6 +46,17 @@ func (p *Photograph) Load(fileName string) error {
 		return err
 	}
 	err = exifData.Walk(p)
+	if err != nil {
+		logging.Log.Error("%v", err)
+		return err
+	}
+	offset, err := fd.Seek(0, 0)
+	if err != nil {
+		logging.Log.Error("%v", err)
+		return err
+	}
+	logging.Log.Debug("offset=%v", offset)
+	p.Data, err = ioutil.ReadAll(fd)
 	if err != nil {
 		logging.Log.Error("%v", err)
 		return err
