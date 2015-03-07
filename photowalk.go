@@ -8,9 +8,21 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"time"
 )
 
-func handleFile(sourceDirectory string, file os.FileInfo) {
+func getTargetDirectoryNameWithDate(date time.Time,
+	targetDirerctory string) string {
+	layout := "2006/01/02"
+	logging.Log.Debug("layout=%v", layout)
+	s := fmt.Sprintf("%s/%s", targetDirerctory, date.Format(layout))
+	logging.Log.Debug("targetDirectory=%v", s)
+
+	return s
+}
+
+func handleFile(sourceDirectory string, targetDirectory string,
+	file os.FileInfo) {
 	fn := filepath.Join(sourceDirectory, file.Name())
 	logging.Log.Debug("filename=%s", fn)
 	photo := photograph.New()
@@ -22,7 +34,17 @@ func handleFile(sourceDirectory string, file os.FileInfo) {
 	for tag, value := range photo.ExifMap {
 		fmt.Printf("%s\t%s\n", tag, value)
 	}
-	logging.Log.Info("photo=%v", photo)
+	logging.Log.Debug("photo=%v", photo.OriginalFileName)
+	logging.Log.Debug("targetDir=%v", targetDirectory)
+	targetDirectory = getTargetDirectoryNameWithDate(photo.Time,
+		targetDirectory)
+	err = os.MkdirAll(targetDirectory, 0700)
+	if err != nil {
+		logging.Log.Error("%s", err)
+	}
+	targetFile := filepath.Join(targetDirectory, file.Name())
+	logging.Log.Debug("targetFile=%s", targetFile)
+	ioutil.WriteFile(targetFile, photo.Data, 0600)
 }
 
 func handleDirectoryTree(sourceDirectory string) {
@@ -43,7 +65,8 @@ func walkFunc(path string, info os.FileInfo, err error) error {
 	return nil
 }
 
-func handleDirectory(sourceDirectory string, listOnly bool) {
+func handleDirectory(sourceDirectory string, targetDirerctory string,
+	listOnly bool) {
 	files, err := ioutil.ReadDir(sourceDirectory)
 	if err != nil {
 		logging.Log.Fatal("%v", err)
@@ -60,7 +83,8 @@ func handleDirectory(sourceDirectory string, listOnly bool) {
 				fmt.Println(filepath.Join(sourceDirectory,
 					f.Name()))
 			} else {
-				handleFile(sourceDirectory, f)
+				handleFile(sourceDirectory,
+					targetDirerctory, f)
 			}
 		}
 	}
@@ -71,6 +95,7 @@ func main() {
 
 Usage:
   photowalk [-r] list <sourceDir>
+  photowalk import <sourceDir> <targetDir>
   photowalk -h | --help
   photowalk --version
 
@@ -84,6 +109,7 @@ Options:
 		logging.Log.Fatal(err)
 		os.Exit(3)
 	}
+	logging.Log.Debug("%v", arguments)
 
 	listOnly := false
 
@@ -91,12 +117,18 @@ Options:
 		listOnly = true
 	}
 
-	logging.Log.Debug(fmt.Sprintf("%v", arguments))
+	targetDirectory := "baz"
+	targetDir := arguments["<targetDir>"]
+	if targetDir != nil {
+		targetDirectory = arguments["<targetDir>"].(string)
+	}
+
 	sourceDirectory := arguments["<sourceDir>"].(string)
 	logging.Log.Debug("sourceDirectory=%v", sourceDirectory)
+	logging.Log.Debug("targetDirectory=%v", targetDirectory)
 	if arguments["-r"].(bool) {
 		handleDirectoryTree(sourceDirectory)
 	} else {
-		handleDirectory(sourceDirectory, listOnly)
+		handleDirectory(sourceDirectory, targetDirectory, listOnly)
 	}
 }
