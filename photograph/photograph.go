@@ -65,6 +65,13 @@ func (p *Photograph) Load(fileName string) error {
 	return nil
 }
 
+// Return the Time member as a ISO 8601 string
+func (p *Photograph) Iso8601() string {
+	layout := "2006-01-02"
+
+	return p.Time.Format(layout)
+}
+
 // Walk implements exif.Walker interface and initializes the Photograph
 // from the EXIF data.
 func (p *Photograph) Walk(field exif.FieldName, tag *tiff.Tag) error {
