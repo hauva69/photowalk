@@ -29,7 +29,7 @@ func handleFile(sourceDirectory string, targetDirectory string,
 	photo := photograph.New()
 	err := photo.Load(fn)
 	if err != nil {
-		logging.Log.Error("%s", err)
+		logging.Log.Error(err.Error())
 	}
 	logging.Log.Debug("%d EXIF tags", len(photo.ExifMap))
 	for tag, value := range photo.ExifMap {
@@ -41,7 +41,7 @@ func handleFile(sourceDirectory string, targetDirectory string,
 		targetDirectory)
 	err = os.MkdirAll(targetDirectory, 0700)
 	if err != nil {
-		logging.Log.Error("%s", err)
+		logging.Log.Error(err.Error())
 	}
 	s := strings.Replace(file.Name(), "_DSC", "", 1)
 	s = strings.Replace(s, "DSC_", "", 1)
@@ -78,7 +78,7 @@ func handleDirectory(sourceDirectory string, targetDirerctory string,
 	listOnly bool) {
 	files, err := ioutil.ReadDir(sourceDirectory)
 	if err != nil {
-		logging.Log.Fatal("%v", err)
+		logging.Log.Fatal(err.Error())
 		os.Exit(4)
 	}
 
