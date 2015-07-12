@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 """Photowalk.
 
@@ -13,7 +13,7 @@ Options:
 """
 
 from docopt import docopt
-from exif import EXIF
+import pyexiv2
 
 import datetime
 import logging
@@ -26,17 +26,15 @@ def getimagefiles(directoryname):
 
 def handleimages(targetdirname, filename):
     logging.debug(filename)
-    fd = open(filename, 'rb')
-    tags = EXIF.process_file(fd)
-    fd.close()
-    datetimestring = str(tags['Image DateTime'])
-    logging.debug('datetimestring {0}'.format(datetimestring))
-    dt = datetime.datetime.strptime(datetimestring, '%Y:%m:%d %H:%M:%S')
+    md = pyexiv2.ImageMetadata(filename)
+    md.read()
+    dt = md['Exif.Image.DateTime'].value
     logging.debug('datetime {0}'.format(dt.isoformat()))
     targetdirname = '{0}/{1}'.format(targetdirname, dt.strftime('%Y/%m%/%d'))
     targetfilename = '{0}/{1}'.format(targetdirname, os.path.basename(filename))
     logging.debug('targetfilename {0}'.format(targetfilename))
-    os.makedirs(targetdirname, exist_ok=True)
+    if not os.path.exists(targetdirname):
+        os.makedirs(targetdirname)
     shutil.copy2(filename, targetfilename)
 
 if __name__ == '__main__':
