@@ -83,6 +83,7 @@
 #
 
 import collections
+import logging
 
 # Don't throw an exception when given an out of range character.
 def make_string(seq):
@@ -1229,6 +1230,10 @@ class IFD_Tag:
         self.values = values
 
     def __str__(self):
+        # FIXME dirty dirty kludge
+        logging.debug('self.printable={0}'.format(self.printable))
+        self.printable = self.printable[2:-1]
+        logging.debug('self.printable={0}'.format(self.printable))
         return self.printable
 
     def __repr__(self):
