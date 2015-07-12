@@ -18,23 +18,26 @@ from exif import EXIF
 import datetime
 import logging
 import os
+import os.path
+import shutil
 
 def getimagefiles(directoryname):
     return os.listdir(directoryname)
 
-def handleimages(filename):
+def handleimages(targetdirname, filename):
     logging.debug(filename)
     fd = open(filename, 'rb')
     tags = EXIF.process_file(fd)
-    logging.debug(len(tags))
-    for k, v in tags.items():
-        print(k)
+    fd.close()
     datetimestring = str(tags['Image DateTime'])
-    #datetimestring = b'2012:11:07 20:19:00'.decode('utf-8')
     logging.debug('datetimestring {0}'.format(datetimestring))
     dt = datetime.datetime.strptime(datetimestring, '%Y:%m:%d %H:%M:%S')
     logging.debug('datetime {0}'.format(dt.isoformat()))
-    fd.close()
+    targetdirname = '{0}/{1}'.format(targetdirname, dt.strftime('%Y/%m%/%d'))
+    targetfilename = '{0}/{1}'.format(targetdirname, os.path.basename(filename))
+    logging.debug('targetfilename {0}'.format(targetfilename))
+    os.makedirs(targetdirname, exist_ok=True)
+    shutil.copy2(filename, targetfilename)
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='Photowalk 0.01')
@@ -45,4 +48,4 @@ if __name__ == '__main__':
     logging.debug('target_dir={0}'.format(targetdir))
     for i in getimagefiles(sourcedir):
         filename = os.path.join(sourcedir, i)
-        handleimages(filename)
+        handleimages(targetdir, filename)
