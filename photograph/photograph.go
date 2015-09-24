@@ -98,6 +98,12 @@ func (p *Photograph) String() string {
 }
 
 func IsPhotographyFile(filename string) bool {
-	logging.Log.Debug(filepath.Ext(filename))
+	extension := filepath.Ext(filename)
+	logging.Log.Debug("extension=%s", extension)
+	switch extension {
+	case ".nef", ".NEF":
+		return true
+	}
+
 	return false
 }

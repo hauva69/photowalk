@@ -5,6 +5,7 @@ import (
 	"github.com/docopt/docopt-go"
 	"github.com/hauva69/photowalk/logging"
 	"github.com/hauva69/photowalk/photograph"
+	"github.com/hauva69/photowalk/util"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -25,35 +26,50 @@ func getTargetDirectoryNameWithDate(date time.Time,
 func handleFile(sourceDirectory string, targetDirectory string,
 	file os.FileInfo) {
 	fn := filepath.Join(sourceDirectory, file.Name())
-	logging.Log.Debug("filename=%s", fn)
-	photo := photograph.New()
-	err := photo.Load(fn)
-	if err != nil {
-		logging.Log.Error("%s", err)
+	if photograph.IsPhotographyFile(fn) {
+		logging.Log.Debug("filename=%s", fn)
+		photo := photograph.New()
+		err := photo.Load(fn)
+		if err != nil {
+			logging.Log.Error("%s", err)
+			os.Exit(6)
+		}
+		logging.Log.Debug("%d EXIF tags", len(photo.ExifMap))
+		for tag, value := range photo.ExifMap {
+			fmt.Printf("%s\t%s\n", tag, value)
+		}
+		logging.Log.Debug("photo=%v", photo.OriginalFileName)
+		logging.Log.Debug("targetDir=%v", targetDirectory)
+		targetDirectory = getTargetDirectoryNameWithDate(photo.Time,
+			targetDirectory)
+		logging.Log.Debug("start of mkdir")
+		err = os.MkdirAll(targetDirectory, 0700)
+		if err != nil {
+			logging.Log.Error("%s", err)
+			os.Exit(6)
+		}
+		logging.Log.Debug("end of mkdir")
+
+		s := strings.Replace(file.Name(), "_DSC", "", 1)
+		s = strings.Replace(s, "DSC_", "", 1)
+		ext := filepath.Ext(s)
+		s = strings.Replace(s, ext, "", 1)
+		ext = strings.ToLower(ext)
+		logging.Log.Debug("ext=%s", ext)
+		targetFile := fmt.Sprintf("%s_%s_%s%s", photo.Iso8601(), s,
+			"makela_ari", ext)
+		targetFile = filepath.Join(targetDirectory, targetFile)
+		logging.Log.Debug("targetFile=%s", targetFile)
+		err = ioutil.WriteFile(targetFile, photo.Data, 0600)
+		if err != nil {
+			logging.Log.Fatal("%s", err)
+			os.Exit(7)
+		}
+	} else {
+		targetFile := filepath.Join("/home/hauva/Videos",
+			file.Name())
+		util.CopyFileContents(fn, targetFile)
 	}
-	logging.Log.Debug("%d EXIF tags", len(photo.ExifMap))
-	for tag, value := range photo.ExifMap {
-		fmt.Printf("%s\t%s\n", tag, value)
-	}
-	logging.Log.Debug("photo=%v", photo.OriginalFileName)
-	logging.Log.Debug("targetDir=%v", targetDirectory)
-	targetDirectory = getTargetDirectoryNameWithDate(photo.Time,
-		targetDirectory)
-	err = os.MkdirAll(targetDirectory, 0700)
-	if err != nil {
-		logging.Log.Error("%s", err)
-	}
-	s := strings.Replace(file.Name(), "_DSC", "", 1)
-	s = strings.Replace(s, "DSC_", "", 1)
-	ext := filepath.Ext(s)
-	s = strings.Replace(s, ext, "", 1)
-	ext = strings.ToLower(ext)
-	logging.Log.Debug("ext=%s", ext)
-	targetFile := fmt.Sprintf("%s_%s_%s%s", photo.Iso8601(), s,
-		"makela_ari", ext)
-	targetFile = filepath.Join(targetDirectory, targetFile)
-	logging.Log.Debug("targetFile=%s", targetFile)
-	ioutil.WriteFile(targetFile, photo.Data, 0600)
 }
 
 func handleDirectoryTree(sourceDirectory string) {
@@ -87,7 +103,6 @@ func handleDirectory(sourceDirectory string, targetDirerctory string,
 		if f.IsDir() {
 			logging.Log.Warning("%s is a directory", f.Name())
 		} else {
-			photograph.IsPhotographyFile(f.Name())
 			if listOnly {
 				fmt.Println(filepath.Join(sourceDirectory,
 					f.Name()))
