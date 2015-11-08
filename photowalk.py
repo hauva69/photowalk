@@ -45,5 +45,7 @@ if __name__ == '__main__':
     logging.debug('source_dir={0}'.format(sourcedir))
     logging.debug('target_dir={0}'.format(targetdir))
     for i in getimagefiles(sourcedir):
+        if i.endswith('MOV'):
+            continue
         filename = os.path.join(sourcedir, i)
         handleimages(targetdir, filename)
