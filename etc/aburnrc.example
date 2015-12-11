@@ -1,6 +1,0 @@
-[default]
-
-growisofs=/usr/bin/growisofs
-dvdformat=dvd+rw-format
-device=/dev/sr0
-
