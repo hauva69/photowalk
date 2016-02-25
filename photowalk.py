@@ -31,7 +31,7 @@ def handleimages(targetdirname, filename):
     dt = md['Exif.Image.DateTime'].value
     logging.debug('datetime {0}'.format(dt.isoformat()))
     targetdirname = '{0}/{1}'.format(targetdirname, dt.strftime('%Y/%m%/%d'))
-    targetfilename = '{0}/{1}'.format(targetdirname, os.path.basename(filename))
+    targetfilename = '{0}/{1}'.format(targetdirname, os.path.basename(filename).lower())
     logging.debug('targetfilename {0}'.format(targetfilename))
     if not os.path.exists(targetdirname):
         os.makedirs(targetdirname)
