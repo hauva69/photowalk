@@ -1,6 +1,7 @@
 package photograph
 
 import (
+	"crypto/md5"
 	"fmt"
 	"github.com/hauva69/photowalk/logging"
 	"github.com/rwcarlsen/goexif/exif"
@@ -20,6 +21,7 @@ type Photograph struct {
 	Time             time.Time
 	Width            int
 	Height           int
+	Md5              string
 	ExifMap
 }
 
@@ -61,6 +63,22 @@ func (p *Photograph) Load(fileName string) error {
 		logging.Log.Error("%v", err)
 		return err
 	}
+	offset, err = fd.Seek(0, 0)
+	if err != nil {
+		logging.Log.Error("%v", err)
+		return err
+	}
+	data, err := ioutil.ReadAll(fd)
+	if err != nil {
+		logging.Log.Error("%v", err)
+		return err
+	}
+	dataBytes := md5.Sum(data)
+	logging.Log.Debug("dataBytes=%x", dataBytes)
+	logging.Log.Debug("len(dataBytes)=%d", len(dataBytes))
+	//s := string(dataBytes[:md5.Size])
+	p.Md5 = fmt.Sprintf("%s", dataBytes)
+	logging.Log.Debug("MD5=%x", p.Md5)
 
 	return nil
 }

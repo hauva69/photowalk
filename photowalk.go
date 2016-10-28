@@ -54,6 +54,9 @@ func handleFile(sourceDirectory string, targetDirectory string,
 	targetFile = filepath.Join(targetDirectory, targetFile)
 	logging.Log.Debug("targetFile=%s", targetFile)
 	ioutil.WriteFile(targetFile, photo.Data, 0600)
+	targetMd5File := fmt.Sprintf("%s%s", targetFile, ".md5")
+	logging.Log.Debug("targetMd5File=%s", targetMd5File)
+	ioutil.WriteFile(targetMd5File, []byte(photo.Md5), 0600)
 }
 
 func handleDirectoryTree(sourceDirectory string) {
@@ -112,7 +115,7 @@ Options:
   -h --help     Show this screen.
   --version     Show version.`
 
-	arguments, err := docopt.Parse(usage, nil, true, "Photowalk 0.01",
+	arguments, err := docopt.Parse(usage, nil, true, "Photowalk 0.1",
 		false)
 	if err != nil {
 		logging.Log.Fatal(err)
