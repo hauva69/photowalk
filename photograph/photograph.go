@@ -76,8 +76,7 @@ func (p *Photograph) Load(fileName string) error {
 	dataBytes := md5.Sum(data)
 	logging.Log.Debug("dataBytes=%x", dataBytes)
 	logging.Log.Debug("len(dataBytes)=%d", len(dataBytes))
-	//s := string(dataBytes[:md5.Size])
-	p.Md5 = fmt.Sprintf("%s", dataBytes)
+	p.Md5 = fmt.Sprintf("%x", dataBytes)
 	logging.Log.Debug("MD5=%x", p.Md5)
 
 	return nil
