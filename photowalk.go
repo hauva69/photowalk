@@ -115,7 +115,7 @@ Options:
   -h --help     Show this screen.
   --version     Show version.`
 
-	arguments, err := docopt.Parse(usage, nil, true, "Photowalk 0.1",
+	arguments, err := docopt.Parse(usage, nil, true, "Photowalk 0.2",
 		false)
 	if err != nil {
 		logging.Log.Fatal(err)
