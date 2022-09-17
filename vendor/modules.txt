@@ -1,0 +1,15 @@
+# github.com/docopt/docopt-go v0.0.0-20180111231733-ee0de3bc6815
+## explicit
+github.com/docopt/docopt-go
+# github.com/hauva69/photowalk v0.0.0-20161228163124-f8cd82266bea
+## explicit
+github.com/hauva69/photowalk/logging
+github.com/hauva69/photowalk/photograph
+# github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
+## explicit
+github.com/op/go-logging
+# github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd
+## explicit
+github.com/rwcarlsen/goexif/exif
+github.com/rwcarlsen/goexif/mknote
+github.com/rwcarlsen/goexif/tiff
