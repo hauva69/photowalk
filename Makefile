@@ -2,4 +2,4 @@ all:
 	go build -mod=vendor
 
 install:
-	cp photowalk /usr/local/bin/
+	install -m 755 photowalk /usr/local/bin/
